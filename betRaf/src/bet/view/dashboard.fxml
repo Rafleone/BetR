@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="854.0" prefWidth="1274.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bet.controller.Controller">
+    <children>
+        <Pane layoutX="12.0" layoutY="115.0" prefHeight="728.0" prefWidth="1250.0" style="-fx-background-color: #000;">
+            <children>
+                <ScrollPane layoutX="490.0" layoutY="14.0" prefHeight="691.0" prefWidth="746.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="691.0" prefWidth="742.0" style="-fx-background-color: #151515 #151515;">
+                            <children>
+                                <TableView fx:id="table" layoutX="14.0" layoutY="14.0" prefHeight="647.0" prefWidth="703.0" style="-fx-background-color: #ebe4d8;">
+                                    <columns>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </Pane>
+        <Pane layoutX="26.0" layoutY="130.0" prefHeight="691.0" prefWidth="454.0" style="-fx-background-color: #151515 #151515;">
+            <children>
+                <TextField fx:id="name" layoutX="14.0" layoutY="96.0" prefHeight="25.0" prefWidth="415.0" promptText="Name" style="-fx-background-color: #ebe4d8;">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </TextField>
+                <TextField fx:id="age" layoutX="14.0" layoutY="159.0" prefHeight="25.0" prefWidth="415.0" promptText="Age" style="-fx-background-color: #ebe4d8;">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </TextField>
+                <TextField fx:id="id" layoutX="14.0" layoutY="33.0" prefHeight="39.0" prefWidth="238.0" promptText="ID (only for delete/ update)" style="-fx-background-color: #ebe4d8;">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </TextField>
+                <Button fx:id="create" layoutX="18.0" layoutY="559.0" mnemonicParsing="false" onAction="#create" prefHeight="39.0" prefWidth="184.0" text="CREATE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="0.81297709104669" startX="0.9503817813087055">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="#f5cd89" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+                </Button>
+                <Button fx:id="read" layoutX="249.0" layoutY="559.0" mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="184.0" text="SEARCH">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+               <textFill>
+                  <RadialGradient centerX="0.34444444444444444" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="#f5cd89" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+                </Button>
+                <Button fx:id="update" layoutX="18.0" layoutY="624.0" mnemonicParsing="false" onAction="#update" prefHeight="39.0" prefWidth="184.0" text="UPDATE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="0.81297709104669" startX="0.9503817813087055">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="#f5cd89" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+                </Button>
+                <Button fx:id="delete" layoutX="249.0" layoutY="624.0" mnemonicParsing="false" onAction="#delete" prefHeight="39.0" prefWidth="184.0" text="DELETE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+               <textFill>
+                  <LinearGradient endX="0.06488549800319526" endY="0.8015267202872356" startX="0.09541998200744162">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="#f5cd89" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+                </Button>
+                <Label fx:id="warning" layoutX="18.0" layoutY="504.0" prefHeight="17.0" prefWidth="415.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="comboNum" layoutX="14.0" layoutY="214.0" prefHeight="25.0" prefWidth="415.0" promptText="Country">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Lithuania" />
+                            <String fx:value="Russia" />
+                            <String fx:value="Holland" />
+                            <String fx:value="Belgium" />
+                            <String fx:value="England" />
+                            <String fx:value="Poland" />
+                            <String fx:value="Norway" />
+                            <String fx:value="Sweden" />
+                            <String fx:value="France" />
+                            <String fx:value="Germany" />
+                            <String fx:value="Italy" />
+                            <String fx:value="Spain" />
+                            <String fx:value="Albania" />
+                            <String fx:value="Serbia" />
+                            <String fx:value="Greece" />
+                            <String fx:value="Cyprus" />
+                            <String fx:value="Switzerland" />
+                            <String fx:value="Latvia" />
+                            <String fx:value="Estonia" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <CheckBox fx:id="cb1" layoutX="46.0" layoutY="389.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="Brazil" textFill="WHITE" />
+                <CheckBox fx:id="cb3" layoutX="46.0" layoutY="417.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="112.0" text="Lithuania" textFill="WHITE" />
+                <CheckBox fx:id="cb2" layoutX="238.0" layoutY="389.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="157.0" text="Argentina" textFill="WHITE" />
+                <RadioButton fx:id="maestro" layoutX="38.0" layoutY="461.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" selected="true" text="Maestro" textFill="WHITE">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Payment" />
+               </toggleGroup></RadioButton>
+                <RadioButton fx:id="visa" layoutX="38.0" layoutY="486.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="VISA" textFill="WHITE" toggleGroup="$Payment" />
+                <RadioButton fx:id="mastercard" layoutX="38.0" layoutY="509.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="MasterCard" textFill="WHITE" toggleGroup="$Payment" />
+                <Label layoutX="14.0" layoutY="319.0" prefHeight="27.0" prefWidth="97.0" text="Event" textFill="#f5cd89">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="18.0" layoutY="434.0" prefHeight="27.0" prefWidth="151.0" text="Paymethode:" textFill="#f5cd89">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            <Slider fx:id="betSlider" layoutX="14.0" layoutY="288.0" majorTickUnit="10.0" minorTickCount="1" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#slider" prefHeight="14.0" prefWidth="345.0" showTickLabels="true" value="1.0" />
+            <Label layoutX="14.0" layoutY="261.0" prefHeight="27.0" prefWidth="97.0" text="Bet:" textFill="#f5cd89">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="359.0" layoutY="270.0" prefHeight="50.0" prefWidth="23.0" text=" €">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="paypal" layoutX="252.0" layoutY="461.0" mnemonicParsing="false" text="PayPal" textFill="WHITE" toggleGroup="$Payment" />
+            <RadioButton fx:id="sms" layoutX="252.0" layoutY="486.0" mnemonicParsing="false" text="SMS" textFill="WHITE" toggleGroup="$Payment" />
+            <ComboBox fx:id="Live" layoutX="133.0" layoutY="320.0" prefWidth="150.0" promptText="Live">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Football" />
+                        <String fx:value="Basketball" />
+                        <String fx:value="Boxing" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <CheckBox fx:id="cb4" layoutX="238.0" layoutY="417.0" mnemonicParsing="false" text="Poland" textFill="WHITE" />
+            <Label layoutX="13.0" layoutY="355.0" text="Game:" textFill="#f5cd89">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="betLabel" layoutX="381.0" layoutY="286.0" prefHeight="18.0" prefWidth="50.0" textFill="#f5cd89" />
+            </children>
+        </Pane>
+        <Label fx:id="userShow" layoutX="1083.0" layoutY="52.0" onMouseClicked="#handleShowDetails" prefHeight="39.0" prefWidth="119.0" textFill="#f5cd89" />
+        <Text fill="#f5cd89" layoutX="972.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged as Admin: " />
+        <Button fx:id="logout" layoutX="1208.0" layoutY="6.0" mnemonicParsing="false" onAction="#logout" style="-fx-border-color: #f5cd89; -fx-background-color: #000000; -fx-border-radius: 8;" text="Logout" textFill="#f5cd89" />
+      <ImageView fitHeight="124.0" fitWidth="208.0" layoutX="550.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@betft.jpg" />
+         </image></ImageView>
+      
+    </children>
+</Pane>
