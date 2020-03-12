@@ -9,7 +9,7 @@ public class Validation {
     public static final String USER_PASSWORD_REGEX_PATTERN = "^[a-zA-z0-9@!?_#&%.^]{5,12}$";
     public static final String USER_EMAIL_REGEX_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,50}$";
     public static final String TEAM_NAME_REGEX_PATTERN = "^[a-zA-Z0-9-_!@#$ ]{5,55}$";
-    public static final String AGE_REGEX_PATTERN = "^[0-9]{0,2}";
+    public static final String AGE_REGEX_PATTERN = "^[0-9]{0,2}$";
 
     public static boolean isValidUsername(String user_name) {
         Pattern pattern = Pattern.compile(USER_NAME_REGEX_PATTERN);
