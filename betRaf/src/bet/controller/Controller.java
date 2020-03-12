@@ -265,38 +265,22 @@ public class Controller {
    // String name, int age, String country, int bet, String event, String game, String payment
     public void create(ActionEvent event) {
         String Name1 = name.getText();
-        String Age1 = age.getText();
-        String bet1 = betLabel.getText();
+        String age1 = (String) age.getText();
+        int bet1 = (int) betSlider.getValue();
 
         String country = "";
-        if (!comboNum.getSelectionModel().isEmpty()) {
+        if (comboNum.getSelectionModel().isEmpty()){
+            comboNum.getSelectionModel().selectFirst();
+            country = comboNum.getSelectionModel().getSelectedItem().toString();
+        } else if (!comboNum.getSelectionModel().isEmpty()){
             country = comboNum.getSelectionModel().getSelectedItem().toString();
         } else {
-            warning.setText("Please check team members");
+            warning.setText("Country required");
         }
 
         String eventLive = "";
-        if (Live.getSelectionModel().equals("Boxing")){
-            //vietoi cb pakeisti tekstus reik ideti i fxml ir visiem id duoti
-            cb1.setText("Brazil");
-            cb2.setText("Argentina");
-            cb3.setText("Lithuania");
-            cb4.setText("Poland");
-        }
-        if (Live.getSelectionModel().isSelected(2)){
-            cb1.setText("LOS Lakers");
-            cb2.setText("Team2");
-            cb3.setText("Sparta");
-            cb4.setText("Zalgiris");
-        }
-        if (Live.getSelectionModel().isSelected(3)){
-            cb1.setText("Zambidis");
-            cb2.setText("Roosmalen");
-            cb3.setText("Tyson");
-            cb4.setText("Ali");
-        }
-        else if (!comboNum.getSelectionModel().isEmpty()) {
-            eventLive = comboNum.getSelectionModel().getSelectedItem().toString();
+        if (!Live.getSelectionModel().isEmpty()) {
+            eventLive = Live.getSelectionModel().getSelectedItem().toString();
         } else {
             warning.setText("Please check events");
         }
@@ -329,83 +313,37 @@ public class Controller {
         }
 
 
-        if (!Validation.isValidTeamName(Name1)) {
+        if (!Validation.isValidName(Name1)) {
             warning.setText("Name Required");
-        } else if (!Validation.isValidSurName(Age1)) {
+        } else if (!Validation.isValidAge(age1)) {
             warning.setText("Age Required");
-        } else {
-            Bet bet = new Bet(Name1, Integer.parseInt(Age1), country,Integer.parseInt(bet1), eventLive, game, payment);
+        }
+        else {
+           // public Bet(String name, int age, String country, int bet, String event, String game, String payment)
+            Bet bet = new Bet(Name1, age1, country, bet1, eventLive, game, payment );
             BetDAO betDAO = new BetDAO();
             String msg = betDAO.add(bet);
             warning.setText(msg);
 
-            updateTableFromDB(""); // get all entries after new entry creation (including new one created)
+
         }
     }
 
     public void search() {
-        updateTableFromDB(name.getText()); // get entries according team name
+
     }
 
-    public void updateTableFromDB(String teamName) {
-        BetDAO betDAO = new BetDAO();
-        rsAllEntries = betDAO.searchByTeamName(teamName);
 
-        fetchColumnList();
-        fetchRowList();
-    }
 
 
     public void delete() {
         BetDAO betDAO = new BetDAO();
         betDAO.deleteById(Integer.parseInt((String) (id.getText())));
 
-        updateTableFromDB(""); // get all entries after entry delete
+
     }
 
-    //only fetch columns
-    private void fetchColumnList() {
-        try {
-            table.getColumns().clear();
 
-            //SQL FOR SELECTING ALL OF CUSTOMER
-            for (int i = 0; i < rsAllEntries.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
-                final int j = i;
-                TableColumn col = new TableColumn(rsAllEntries.getMetaData().getColumnName(i + 1).toUpperCase());
-                col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                        return new SimpleStringProperty(param.getValue().get(j).toString());
-                    }
-                });
-
-                table.getColumns().removeAll(col);
-                table.getColumns().addAll(col);
-            }
-        } catch (SQLException e) {
-            warning.setText("Failure in getting all entries");
-        }
-    }
-
-    //fetches rows and data from the list
-    private void fetchRowList() {
-        try {
-            data.clear();
-            while (rsAllEntries.next()) {
-                //Iterate Row
-                ObservableList row = FXCollections.observableArrayList();
-                for (int i = 1; i <= rsAllEntries.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
-                    row.add(rsAllEntries.getString(i));
-                }
-                data.add(row);
-            }
-            //Connects table with list
-            table.setItems(data);
-        } catch (SQLException ex) {
-            warning.setText("Failure in getting all entries");
-        }
-    }
 
     public void admin(MouseEvent mouseEvent) throws IOException {
         regSignin.setText("Admin");
@@ -472,5 +410,29 @@ public class Controller {
 
     public void update(ActionEvent event) {
 
+    }
+
+
+
+
+    public void cmbLive(ActionEvent event) {
+        if (Live.getSelectionModel().getSelectedItem().equals("Football")){
+            cb1.setText("Brazil");
+            cb2.setText("Portugal");
+            cb3.setText("Spain");
+            cb4.setText("France");
+        }
+        if (Live.getSelectionModel().getSelectedItem().equals("Basketball")){
+            cb1.setText("LOS Lakers");
+            cb2.setText("Team2");
+            cb3.setText("Sparta");
+            cb4.setText("Zalgiris");
+        }
+        if (Live.getSelectionModel().getSelectedItem().equals("Boxing")){
+            cb1.setText("Zambidis");
+            cb2.setText("Roosmalen");
+            cb3.setText("Tyson");
+            cb4.setText("Ali");
+        }
     }
 }

@@ -5,14 +5,14 @@ import javafx.scene.control.Slider;
 public class Bet {
     private int id;
     private String name;
-    private int age;
+    private String age;
     private String country;
     private int bet;
     private String event;
     private String game;
     private String payment;
 
-    public Bet(String name, int age, String country, int bet, String event, String game, String payment) {
+    public Bet(String name, String age, String country, int bet, String event, String game, String payment) {
         this.name = name;
         this.age = age;
         this.country = country;
@@ -41,11 +41,11 @@ public class Bet {
         this.name = name;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -89,7 +89,7 @@ public class Bet {
         this.payment = payment;
     }
 
-    public Bet(int id, String name, int age, String country, int bet, String event, String game, String payment) {
+    public Bet(int id, String name, String age, String country, int bet, String event, String game, String payment) {
         this.id = id;
         this.name = name;
         this.age = age;

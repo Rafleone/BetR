@@ -95,11 +95,6 @@
                   </LinearGradient>
                </textFill>
                 </Button>
-                <Label fx:id="warning" layoutX="18.0" layoutY="504.0" prefHeight="17.0" prefWidth="415.0">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Label>
                 <ComboBox fx:id="comboNum" layoutX="14.0" layoutY="214.0" prefHeight="25.0" prefWidth="415.0" promptText="Country">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -125,16 +120,16 @@
                         </FXCollections>
                     </items>
                 </ComboBox>
-                <CheckBox fx:id="cb1" layoutX="46.0" layoutY="389.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="Brazil" textFill="WHITE" />
-                <CheckBox fx:id="cb3" layoutX="46.0" layoutY="417.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="112.0" text="Lithuania" textFill="WHITE" />
-                <CheckBox fx:id="cb2" layoutX="238.0" layoutY="389.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="157.0" text="Argentina" textFill="WHITE" />
+                <CheckBox fx:id="cb1" layoutX="46.0" layoutY="389.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" textFill="WHITE" />
+                <CheckBox fx:id="cb3" layoutX="46.0" layoutY="417.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="112.0" textFill="WHITE" />
+                <CheckBox fx:id="cb2" layoutX="238.0" layoutY="389.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="157.0" textFill="WHITE" />
                 <RadioButton fx:id="maestro" layoutX="38.0" layoutY="461.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" selected="true" text="Maestro" textFill="WHITE">
                <toggleGroup>
                   <ToggleGroup fx:id="Payment" />
                </toggleGroup></RadioButton>
                 <RadioButton fx:id="visa" layoutX="38.0" layoutY="486.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="VISA" textFill="WHITE" toggleGroup="$Payment" />
                 <RadioButton fx:id="mastercard" layoutX="38.0" layoutY="509.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="128.0" text="MasterCard" textFill="WHITE" toggleGroup="$Payment" />
-                <Label layoutX="14.0" layoutY="319.0" prefHeight="27.0" prefWidth="97.0" text="Event" textFill="#f5cd89">
+                <Label layoutX="14.0" layoutY="332.0" prefHeight="27.0" prefWidth="97.0" text="Event" textFill="#f5cd89">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -157,7 +152,7 @@
             </Label>
             <RadioButton fx:id="paypal" layoutX="252.0" layoutY="461.0" mnemonicParsing="false" text="PayPal" textFill="WHITE" toggleGroup="$Payment" />
             <RadioButton fx:id="sms" layoutX="252.0" layoutY="486.0" mnemonicParsing="false" text="SMS" textFill="WHITE" toggleGroup="$Payment" />
-            <ComboBox fx:id="Live" layoutX="133.0" layoutY="320.0" prefWidth="150.0" promptText="Live">
+            <ComboBox fx:id="Live" layoutX="133.0" layoutY="333.0" onAction="#cmbLive" prefWidth="150.0" promptText="Live Sports">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Football" />
@@ -166,7 +161,7 @@
                     </FXCollections>
                 </items>
             </ComboBox>
-            <CheckBox fx:id="cb4" layoutX="238.0" layoutY="417.0" mnemonicParsing="false" text="Poland" textFill="WHITE" />
+            <CheckBox fx:id="cb4" layoutX="238.0" layoutY="417.0" mnemonicParsing="false" textFill="WHITE" />
             <Label layoutX="13.0" layoutY="355.0" text="Game:" textFill="#f5cd89">
                <font>
                   <Font size="18.0" />
@@ -175,13 +170,25 @@
             <Label fx:id="betLabel" layoutX="381.0" layoutY="286.0" prefHeight="18.0" prefWidth="50.0" textFill="#f5cd89" />
             </children>
         </Pane>
-        <Label fx:id="userShow" layoutX="1083.0" layoutY="52.0" onMouseClicked="#handleShowDetails" prefHeight="39.0" prefWidth="119.0" textFill="#f5cd89" />
-        <Text fill="#f5cd89" layoutX="972.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged as Admin: " />
+        <Label fx:id="userShow" layoutX="1087.0" layoutY="59.0" onMouseClicked="#handleShowDetails" prefHeight="25.0" prefWidth="50.0" textFill="#f5cd89" />
+        <Text fill="#f5cd89" layoutX="943.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged as Admin: " />
         <Button fx:id="logout" layoutX="1208.0" layoutY="6.0" mnemonicParsing="false" onAction="#logout" style="-fx-border-color: #f5cd89; -fx-background-color: #000000; -fx-border-radius: 8;" text="Logout" textFill="#f5cd89" />
-      <ImageView fitHeight="124.0" fitWidth="208.0" layoutX="550.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="115.0" fitWidth="204.0" layoutX="550.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@betft.jpg" />
          </image></ImageView>
+      <BorderPane layoutX="552.0" layoutY="1.0" prefHeight="115.0" prefWidth="204.0" style="-fx-border-color: #f5cd89;" />
+      <BorderPane layoutX="1162.0" layoutY="-2.0" prefHeight="115.0" prefWidth="1.0" style="-fx-background-color: #f5cd89;" />
+      <Label layoutX="12.0" layoutY="-11.0" prefHeight="101.0" prefWidth="511.0" text="The Best" textFill="#f5cd89">
+         <font>
+            <Font name="System Bold" size="84.0" />
+         </font>
+      </Label>
+          <Label fx:id="warning" layoutX="26.0" layoutY="84.0" prefHeight="17.0" prefWidth="415.0">
+              <font>
+                  <Font size="18.0" />
+              </font>
+          </Label>
       
     </children>
 </Pane>

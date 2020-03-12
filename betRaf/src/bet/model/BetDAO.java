@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class BetDAO {
 
-    final static String URL = "jdbc:mysql://localhost:3306/dbbet";
+    final static String URL = "jdbc:mysql://localhost:3306/betdb";
     public String add(Bet bet){
         String query = "insert into bet (name , age, country, bet, event, game, payment)" +
                 "values (?,?,?,?,?,?,?)";
@@ -12,7 +12,7 @@ public class BetDAO {
             Connection connection = DriverManager.getConnection(URL, "root", "");
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, bet.getName());
-            preparedStatement.setInt(2, bet.getAge());
+            preparedStatement.setString(2, bet.getAge());
             preparedStatement.setString(3, bet.getCountry());
             preparedStatement.setInt(4, bet.getBet());
             preparedStatement.setString(5, bet.getEvent());
@@ -56,7 +56,7 @@ public class BetDAO {
             Connection connection = DriverManager.getConnection(URL, "root", "");
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, bet.getName());
-            preparedStatement.setInt(2, bet.getAge());
+            preparedStatement.setString(2, bet.getAge());
             preparedStatement.setString(3, bet.getCountry());
             preparedStatement.setInt(4, bet.getBet());
             preparedStatement.setString(5, bet.getEvent());
