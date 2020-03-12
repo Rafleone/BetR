@@ -14,7 +14,7 @@ public class BetDAO {
             preparedStatement.setString(1, bet.getName());
             preparedStatement.setString(2, bet.getAge());
             preparedStatement.setString(3, bet.getCountry());
-            preparedStatement.setInt(4, bet.getBet());
+            preparedStatement.setDouble(4, bet.getBet());
             preparedStatement.setString(5, bet.getEvent());
             preparedStatement.setString(6, bet.getGame());
             preparedStatement.setString(7, bet.getPayment());
@@ -58,7 +58,7 @@ public class BetDAO {
             preparedStatement.setString(1, bet.getName());
             preparedStatement.setString(2, bet.getAge());
             preparedStatement.setString(3, bet.getCountry());
-            preparedStatement.setInt(4, bet.getBet());
+            preparedStatement.setDouble(4, bet.getBet());
             preparedStatement.setString(5, bet.getEvent());
             preparedStatement.setString(6, bet.getGame());
             preparedStatement.setString(7, bet.getPayment());

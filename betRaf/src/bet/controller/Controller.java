@@ -101,7 +101,7 @@ public class Controller {
 
     //login window
     public void login(ActionEvent event) {
-        if (Validation.isValidUsername(username.getText()) && Validation.isValidPassword(password.getText())) {
+        if (Validation.isValidName(username.getText()) && Validation.isValidPassword(password.getText())) {
             UserDAO userDAO = new UserDAO();
             String msg = userDAO.login(username.getText(), password.getText());
             if (msg.contains("Successful")) {
@@ -112,7 +112,7 @@ public class Controller {
                 error.setText(msg);
             }
         }
-        if (Validation.isValidUsername(username.getText()) && Validation.isValidPassword(password.getText())) {
+        if (Validation.isValidName(username.getText()) && Validation.isValidPassword(password.getText())) {
             AdminDAO adminDAO = new AdminDAO();
             String msg = adminDAO.regLogin(username.getText(), password.getText());
             if (msg.contains("Successful")) {
@@ -159,7 +159,7 @@ public class Controller {
 
         // clear errors on btn pressed
         regError.setText("");
-        if (!Validation.isValidUsername(regUser.getText())) {
+        if (!Validation.isValidName(regUser.getText())) {
             regError.setText("Username is incorrect (letters and numbers only, at least 5 char)");
             isRegistered = false;
         } else if (!Validation.isValidPassword(regPassw.getText())) {
@@ -262,24 +262,48 @@ public class Controller {
                 betSlider.valueProperty()));
     }
 
-   // String name, int age, String country, int bet, String event, String game, String payment
+    public void cmbLive(ActionEvent event) {
+        if (Live.getSelectionModel().getSelectedItem().equals("Football")) {
+            cb1.setText("Brazil");
+            cb2.setText("Portugal");
+            cb3.setText("Spain");
+            cb4.setText("France");
+        }
+        if (Live.getSelectionModel().getSelectedItem().equals("Basketball")) {
+            cb1.setText("LOS Lakers");
+            cb2.setText("Team2");
+            cb3.setText("Sparta");
+            cb4.setText("Zalgiris");
+        }
+        if (Live.getSelectionModel().getSelectedItem().equals("Boxing")) {
+            cb1.setText("Zambidis");
+            cb2.setText("Roosmalen");
+            cb3.setText("Tyson");
+            cb4.setText("Ali");
+        }
+    }
+
+    // String name, int age, String country, int bet, String event, String game, String payment
     public void create(ActionEvent event) {
-        String Name1 = name.getText();
-        String age1 = (String) age.getText();
-        int bet1 = (int) betSlider.getValue();
+        String name1 = name.getText();
+        String age1 = age.getText();
+        double bet1 = betSlider.getValue();
 
         String country = "";
-        if (comboNum.getSelectionModel().isEmpty()){
+        if (comboNum.getSelectionModel().isEmpty()) {
             comboNum.getSelectionModel().selectFirst();
             country = comboNum.getSelectionModel().getSelectedItem().toString();
-        } else if (!comboNum.getSelectionModel().isEmpty()){
+        } else if (!comboNum.getSelectionModel().isEmpty()) {
             country = comboNum.getSelectionModel().getSelectedItem().toString();
         } else {
             warning.setText("Country required");
         }
 
         String eventLive = "";
-        if (!Live.getSelectionModel().isEmpty()) {
+        if (Live.getSelectionModel().isEmpty()) {
+            Live.getSelectionModel().selectFirst();
+            eventLive = Live.getSelectionModel().getSelectedItem().toString();
+        } else if (!Live.getSelectionModel().isEmpty()) {
             eventLive = Live.getSelectionModel().getSelectedItem().toString();
         } else {
             warning.setText("Please check events");
@@ -292,10 +316,10 @@ public class Controller {
         if (cb2.isSelected()) {
             game += cb2.getText() + ",";
         }
-        if (cb3.isSelected()) {
+        if (!cb3.isSelected()) {
             game += cb3.getText() + ",";
         }
-        if (cb4.isSelected()){
+        if (!cb4.isSelected()) {
             game += cb4.getText() + ",";
         }
 
@@ -306,26 +330,23 @@ public class Controller {
             payment += visa.getText();
         } else if (maestro.isSelected()) {
             payment += maestro.getText();
-        } else if (mastercard.isSelected()){
+        } else if (mastercard.isSelected()) {
             payment += mastercard.getText();
-        } else if (sms.isSelected()){
+        } else if (sms.isSelected()) {
             payment += sms.getText();
         }
 
 
-        if (!Validation.isValidName(Name1)) {
+        if (!Validation.isValidName(name1)) {
             warning.setText("Name Required");
         } else if (!Validation.isValidAge(age1)) {
             warning.setText("Age Required");
-        }
-        else {
-           // public Bet(String name, int age, String country, int bet, String event, String game, String payment)
-            Bet bet = new Bet(Name1, age1, country, bet1, eventLive, game, payment );
+        } else {
+            // public Bet(String name, int age, String country, int bet, String event, String game, String payment)
+            Bet bet = new Bet(name1, age1, country, bet1, eventLive, game, payment);
             BetDAO betDAO = new BetDAO();
             String msg = betDAO.add(bet);
             warning.setText(msg);
-
-
         }
     }
 
@@ -334,15 +355,12 @@ public class Controller {
     }
 
 
-
-
     public void delete() {
         BetDAO betDAO = new BetDAO();
         betDAO.deleteById(Integer.parseInt((String) (id.getText())));
 
 
     }
-
 
 
     public void admin(MouseEvent mouseEvent) throws IOException {
@@ -359,13 +377,13 @@ public class Controller {
         System.out.println(regSignin.getText());
     }
 
-    public void logout(ActionEvent event){
+    public void logout(ActionEvent event) {
         try {
             // we are in controller folder, but our view is not here, so we need to go one step up - ../
             Parent root = FXMLLoader.load(getClass().getResource("../view/login.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Login");
-            stage.setScene(new Scene(root, 450  , 350));
+            stage.setScene(new Scene(root, 450, 350));
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (Exception e) {
@@ -374,7 +392,7 @@ public class Controller {
     }
 
 
-    public void handleShowDetails(){
+    public void handleShowDetails() {
 
         Connection c = null;
         Statement stmt = null;
@@ -384,16 +402,16 @@ public class Controller {
             c.setAutoCommit(false);
 
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT  * FROM  " + Constant.TABLE_NAME + " Where username = '" + name+ "'");
+            ResultSet rs = stmt.executeQuery("SELECT  * FROM  " + Constant.TABLE_NAME + " Where username = '" + name + "'");
 
-            while ( rs.next()) {
+            while (rs.next()) {
                 String username = rs.getString("username");
                 // String id = rs.getString("id");
 
                 userShow.setText(username);
                 // userShow.setText(id);
 
-                System.out.println( "username = " + username );
+                System.out.println("username = " + username);
                 // System.out.println("Id = " + id);
                 System.out.println();
 
@@ -401,38 +419,86 @@ public class Controller {
             rs.close();
             stmt.close();
             c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
     }
 
     public void update(ActionEvent event) {
+        int id1 = (Integer.parseInt(id.getText()));
+        String name1 = name.getText();
+        String age1 = age.getText();
+        double bet1 = betSlider.getValue();
 
-    }
-
-
-
-
-    public void cmbLive(ActionEvent event) {
-        if (Live.getSelectionModel().getSelectedItem().equals("Football")){
-            cb1.setText("Brazil");
-            cb2.setText("Portugal");
-            cb3.setText("Spain");
-            cb4.setText("France");
+        String country = "";
+        if (comboNum.getSelectionModel().isEmpty()) {
+            comboNum.getSelectionModel().selectFirst();
+            country = comboNum.getSelectionModel().getSelectedItem().toString();
+        } else if (!comboNum.getSelectionModel().isEmpty()) {
+            country = comboNum.getSelectionModel().getSelectedItem().toString();
+        } else {
+            warning.setText("Country required");
         }
-        if (Live.getSelectionModel().getSelectedItem().equals("Basketball")){
-            cb1.setText("LOS Lakers");
-            cb2.setText("Team2");
-            cb3.setText("Sparta");
-            cb4.setText("Zalgiris");
+
+        String eventLive = "";
+        if (Live.getSelectionModel().isEmpty()) {
+            Live.getSelectionModel().selectFirst();
+            eventLive = Live.getSelectionModel().getSelectedItem().toString();
+        } else if (!Live.getSelectionModel().isEmpty()) {
+            eventLive = Live.getSelectionModel().getSelectedItem().toString();
+        } else {
+            warning.setText("Please check events");
         }
-        if (Live.getSelectionModel().getSelectedItem().equals("Boxing")){
-            cb1.setText("Zambidis");
-            cb2.setText("Roosmalen");
-            cb3.setText("Tyson");
-            cb4.setText("Ali");
+
+        String game = "";
+        if (cb1.isSelected()) {
+            game += cb1.getText() + ",";
+        }
+        if (cb2.isSelected()) {
+            game += cb2.getText() + ",";
+        }
+        if (!cb3.isSelected()) {
+            game += cb3.getText() + ",";
+        }
+        if (!cb4.isSelected()) {
+            game += cb4.getText() + ",";
+        }
+
+        String payment = "";
+        if (paypal.isSelected()) {
+            payment += paypal.getText();
+        } else if (visa.isSelected()) {
+            payment += visa.getText();
+        } else if (maestro.isSelected()) {
+            payment += maestro.getText();
+        } else if (mastercard.isSelected()) {
+            payment += mastercard.getText();
+        } else if (sms.isSelected()) {
+            payment += sms.getText();
+        }
+
+
+        if (!Validation.isValidName(name1)) {
+            warning.setText("Name Required");
+        } else if (!Validation.isValidAge(age1)) {
+            warning.setText("Age Required");
+        } else {
+            // public Bet(String name, int age, String country, int bet, String event, String game, String payment)
+            Bet bet = new Bet(id1, name1, age1, country, bet1, eventLive, game, payment);
+            BetDAO betDAO = new BetDAO();
+            betDAO.editById(bet);
+
         }
     }
 }
+
+
+
+
+//    Dakar dakar = new Dakar(teamid, teamName1, nameSurname1, sponsors, racingCar, Integer.parseInt(members));
+//    DakarDAO dakarDAO = new DakarDAO();
+//    dakarDAO.editById(dakar);
+//
+//    updateTableFromDB(""); // get all entries after entry update (including newly updated)

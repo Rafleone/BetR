@@ -7,12 +7,23 @@ public class Bet {
     private String name;
     private String age;
     private String country;
-    private int bet;
+    private double bet;
     private String event;
     private String game;
     private String payment;
 
-    public Bet(String name, String age, String country, int bet, String event, String game, String payment) {
+    public Bet(int id, String name, String age, String country, double bet, String event, String game, String payment) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.country = country;
+        this.bet = bet;
+        this.event = event;
+        this.game = game;
+        this.payment = payment;
+    }
+
+    public Bet(String name, String age, String country, double bet, String event, String game, String payment) {
         this.name = name;
         this.age = age;
         this.country = country;
@@ -57,11 +68,11 @@ public class Bet {
         this.country = country;
     }
 
-    public int getBet() {
+    public double getBet() {
         return bet;
     }
 
-    public void setBet(int bet) {
+    public void setBet(double bet) {
         this.bet = bet;
     }
 
