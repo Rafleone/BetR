@@ -18,7 +18,7 @@ public class AdminDAO {
             preparedStatement.setString(2, admin.getPassword());
             preparedStatement.setString(3, admin.getEmail());
             preparedStatement.executeUpdate();
-            msg1 = "admin";
+            msg1 = "Admin";
         } catch (SQLException e) {
             e.printStackTrace();
             msg1 = "Failure adding new admin";

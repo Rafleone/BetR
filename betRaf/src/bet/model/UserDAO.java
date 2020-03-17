@@ -35,7 +35,6 @@ public class UserDAO {
 
     public String register(User user) {
         String query = "INSERT INTO " + Constant.TABLE_NAME + " (username, password, email) VALUES (?, ?, ?)";
-
         String msg = "";
         try {
 

@@ -143,7 +143,7 @@ public class Controller {
             Parent root = FXMLLoader.load(getClass().getResource("../view/register.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Register");
-            stage.setScene(new Scene(root, 450, 350));
+            stage.setScene(new Scene(root, 530, 440));
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (Exception e) {
@@ -169,7 +169,7 @@ public class Controller {
             regError.setText("Password doesn't match");
             isRegistered = false;
         } else if (!Validation.isValidEmail(regEmail.getText())) {
-            regError.setText("Email is not correct, pattern- dakar@one.lt");
+            regError.setText("Email is not correct, pattern- bet@gmail.com");
             isRegistered = false;
         }
 
@@ -179,11 +179,11 @@ public class Controller {
                 Admin admin = new Admin(regUser.getText(), regPassw.getText(), regEmail.getText());
                 AdminDAO adminDAO = new AdminDAO();
                 String msg1 = adminDAO.regAdmin(admin);
-                if (msg1.contains("admin")) {
+                if (msg1.contains("Admin")) {
                     Parent root = FXMLLoader.load(getClass().getResource("../view/login.fxml"));
                     Stage stage = new Stage();
                     stage.setTitle("Login");
-                    stage.setScene(new Scene(root, 450, 350));
+                    stage.setScene(new Scene(root, 470, 390));
                     stage.show();
                     // hides current stage (window)
                     ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -199,7 +199,7 @@ public class Controller {
                         Parent root = FXMLLoader.load(getClass().getResource("../view/login.fxml"));
                         Stage stage = new Stage();
                         stage.setTitle("Login");
-                        stage.setScene(new Scene(root, 450, 350));
+                        stage.setScene(new Scene(root, 470, 390));
                         stage.show();
                         // hides current stage (window)
                         ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -302,24 +302,27 @@ public class Controller {
         String eventLive = "";
         if (Live.getSelectionModel().isEmpty()) {
             Live.getSelectionModel().selectFirst();
-            eventLive = Live.getSelectionModel().getSelectedItem().toString();
         } else if (!Live.getSelectionModel().isEmpty()) {
             eventLive = Live.getSelectionModel().getSelectedItem().toString();
         } else {
             warning.setText("Please check events");
         }
 
+
         String game = "";
-        if (cb1.isSelected()) {
+        if (!cb1.isSelected()) {
+            warning.setText("please select");
+            //game += cb1.getText() + ",";
+        } else {
             game += cb1.getText() + ",";
         }
         if (cb2.isSelected()) {
             game += cb2.getText() + ",";
         }
-        if (!cb3.isSelected()) {
+        if (cb3.isSelected()) {
             game += cb3.getText() + ",";
         }
-        if (!cb4.isSelected()) {
+        if (cb4.isSelected()) {
             game += cb4.getText() + ",";
         }
 
@@ -337,21 +340,21 @@ public class Controller {
         }
 
 
+
         if (!Validation.isValidName(name1)) {
             warning.setText("Name Required");
         } else if (!Validation.isValidAge(age1)) {
             warning.setText("Age Required");
-        } else {
+        }
+
+        else {
             // public Bet(String name, int age, String country, int bet, String event, String game, String payment)
             Bet bet = new Bet(name1, age1, country, bet1, eventLive, game, payment);
             BetDAO betDAO = new BetDAO();
             String msg = betDAO.add(bet);
             warning.setText(msg);
+            System.out.println("paskyra sukuria");
         }
-    }
-
-    public void search() {
-
     }
 
 
@@ -383,7 +386,7 @@ public class Controller {
             Parent root = FXMLLoader.load(getClass().getResource("../view/login.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Login");
-            stage.setScene(new Scene(root, 450, 350));
+            stage.setScene(new Scene(root, 470, 390));
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (Exception e) {
@@ -426,6 +429,19 @@ public class Controller {
 
     }
 
+
+
+    public void search() {
+        updateTableFromDB(name.getText()); // get entries according team name
+    }
+
+    public void updateTableFromDB(String teamName) {
+        BetDAO betDAO = new BetDAO();
+        rsAllEntries = betDAO.searchByTeamName(teamName);
+
+        fetchColumnList();
+        fetchRowList();
+    }
     public void update(ActionEvent event) {
         int id1 = (Integer.parseInt(id.getText()));
         String name1 = name.getText();
@@ -490,6 +506,65 @@ public class Controller {
             BetDAO betDAO = new BetDAO();
             betDAO.editById(bet);
 
+            updateTableFromDB(""); // get all entries after entry update (including newly updated)
+        }
+    }
+
+    //only fetch columns
+    private void fetchColumnList() {
+        try {
+            table.getColumns().clear();
+
+            //SQL FOR SELECTING ALL OF CUSTOMER
+            for (int i = 0; i < rsAllEntries.getMetaData().getColumnCount(); i++) {
+                //We are using non property style for making dynamic table
+                final int j = i;
+                TableColumn col = new TableColumn(rsAllEntries.getMetaData().getColumnName(i + 1).toUpperCase());
+                col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+
+                table.getColumns().removeAll(col);
+                table.getColumns().addAll(col);
+            }
+        } catch (SQLException e) {
+            warning.setText("Failure in getting all entries");
+        }
+    }
+
+    //fetches rows and data from the list
+    private void fetchRowList() {
+        try {
+            data.clear();
+            while (rsAllEntries.next()) {
+                //Iterate Row
+                ObservableList row = FXCollections.observableArrayList();
+                for (int i = 1; i <= rsAllEntries.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(rsAllEntries.getString(i));
+                }
+                data.add(row);
+            }
+            //Connects table with list
+            table.setItems(data);
+        } catch (SQLException ex) {
+            warning.setText("Failure in getting all entries");
+        }
+    }
+
+    public void backtologin(ActionEvent event) {
+        try {
+            // we are in controller folder, but our view is not here, so we need to go one step up - ../
+            Parent root = FXMLLoader.load(getClass().getResource("../view/login.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Login");
+            stage.setScene(new Scene(root, 470, 390));
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
@@ -497,8 +572,8 @@ public class Controller {
 
 
 
-//    Dakar dakar = new Dakar(teamid, teamName1, nameSurname1, sponsors, racingCar, Integer.parseInt(members));
-//    DakarDAO dakarDAO = new DakarDAO();
-//    dakarDAO.editById(dakar);
-//
-//    updateTableFromDB(""); // get all entries after entry update (including newly updated)
+
+// vartotojas mato tik savo irasus o admin visus
+// kad registruojant patikrintu ar yra toks username  jai yra tai rodytu kad uzimtaas ir pasirinktu kita
+// jaigu admin nori trinti pagal id ir jaigu nera tikio id tai isvesti kad nera tokio
+// paieska bet
